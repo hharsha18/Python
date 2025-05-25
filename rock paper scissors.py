@@ -1,4 +1,5 @@
 import random 
+print("Harsha D S,USN:1AY24AI041,SEC:M")
 choices = ['rock','paper','scissor']
 user_choice=input("Enter your choice(rock,paper,scissor): ")
 computer_choice = random.choice(choices)
