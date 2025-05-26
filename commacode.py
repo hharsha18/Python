@@ -8,5 +8,5 @@ def list_to_string(items):
         return f'{items[0]} and {items[1]}'
     else:
         return ', '.join(items[:-1]) + ', and ' + items[-1]
-spam = ['apples', 'bananas', 'tofu', 'cats']
+spam = ['car', 'bike', 'bus', 'train']
 print(list_to_string(spam))
