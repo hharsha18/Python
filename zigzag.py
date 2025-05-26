@@ -6,4 +6,4 @@ for i in range(lines):
         spaces = i
     else:
         spaces = lines - i - 1
-    print(" " * spaces + "*" * 8)
+    print(" " * spaces +"*"*8)
