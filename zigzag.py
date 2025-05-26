@@ -1,9 +1,11 @@
 print("Harsha D S,USN:1AY24AI041,SEC:M")
-lines = 9
-max_spaces = lines 
-for i in range(lines):
-    if i <= max_spaces:
-        spaces = i
-    else:
-        spaces = lines - i - 1
-    print(" " * spaces +"*"*8)
+
+rows = 3         
+cols = 8     
+for row in range(rows):
+    for col in range(cols):
+        if ((row + col) % 4 == 0) or (row == 1 and col % 4 == 0):
+            print("*", end="")
+        else:
+            print(" ", end="")
+    print()
