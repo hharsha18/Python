@@ -6,7 +6,6 @@ DICE_POOL = {
     'yellow': ['brain', 'brain', 'footsteps', 'footsteps', 'shotgun', 'shotgun'],
     'red': ['brain', 'footsteps', 'footsteps', 'shotgun', 'shotgun', 'shotgun']
 }
-
 ALL_DICE = ['green'] * 6 + ['yellow'] * 4 + ['red'] * 3
 
 def roll_die(color):
@@ -19,50 +18,39 @@ def zombie_bot_turn(name="Bot"):
     dice_pool = ALL_DICE.copy()
     random.shuffle(dice_pool)
 
-    brains = 0
-    shotguns = 0
-    footprints = []
+    brains, shotguns, footprints = 0, 0, []
 
-    print(f"\n{name}'s turn begins!")
     while True:
         needed = 3 - len(footprints)
         drawn_dice = footprints + draw_dice(dice_pool, needed)
         footprints = []
+        results = [roll_die(color) for color in drawn_dice]
 
-        print(f"\nRolling: {drawn_dice}")
-        roll_results = [roll_die(color) for color in drawn_dice]
-
-        for i, result in enumerate(roll_results):
-            print(f"Rolled a {drawn_dice[i]} die: {result}")
-            if result == 'brain':
-                brains += 1
-            elif result == 'shotgun':
-                shotguns += 1
-            else:
-                footprints.append(drawn_dice[i])
-
-        print(f"Current: {brains} brains, {shotguns} shotguns")
+        for i, res in enumerate(results):
+            if res == 'brain': brains += 1
+            elif res == 'shotgun': shotguns += 1
+            else: footprints.append(drawn_dice[i])
 
         if shotguns >= 3:
-            print(f"{name} got blasted! Turn over. No brains this round.")
-            return 0  # Lost all collected brains this turn
-
+            return 0  
         if brains >= 2 or shotguns == 2:
-            print(f"{name} decides to stop and bank {brains} brains.")
-            return brains                                                                                                                                                                                                                             def simulate_game():
-    scores = {'Bot A': 0, 'Bot B': 0}
-    turn = 0
-    players = list(scores.keys())
+            return brains 
 
+def simulate_game():
+    scores = {'Bot A': 0, 'Bot B': 0}
+    players = list(scores.keys())
+    turn = 0
+
+    print("\nGame Start!\n")
     while max(scores.values()) < 13:
-        player = players[turn % 2]
-        gained = zombie_bot_turn(player)
-        scores[player] += gained
-        print(f"{player} total score: {scores[player]}")
+        p = players[turn % 2]
+        gained = zombie_bot_turn(p)
+        scores[p] += gained
+        print(f"{p}: +{gained} -> {scores[p]}")
         turn += 1
 
     winner = max(scores, key=scores.get)
     print(f"\n🏆 {winner} wins with {scores[winner]} brains!")
 
-if _name_ == "_main_":
-    simulate_game()
+if __name__ == "__main__":
+    simulate_game()
